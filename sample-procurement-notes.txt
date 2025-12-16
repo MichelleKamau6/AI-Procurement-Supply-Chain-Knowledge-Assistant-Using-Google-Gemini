@@ -1,0 +1,49 @@
+PROCUREMENT & SUPPLY CHAIN MANAGEMENT NOTES
+
+1. TENDERING
+Tendering is the procurement process of inviting vendors to submit bids for goods or services. It ensures transparency, competition, and value for money. The tendering process includes:
+- Preparation of tender documents
+- Advertisement and invitation to bid
+- Bid submission and opening
+- Evaluation and award
+
+2. CONTRACT MANAGEMENT
+Contract management is the systematic process of managing contract creation, execution, and analysis to maximize operational and financial performance. Key roles include:
+- Contract monitoring and compliance
+- Performance tracking against KPIs
+- Risk management and mitigation
+- Dispute resolution
+- Contract renewal or termination
+- Documentation and record keeping
+
+3. PROCUREMENT PROCESS
+The procurement process consists of several stages:
+a) Need identification
+b) Supplier selection
+c) Purchase order creation
+d) Order fulfillment
+e) Receipt and inspection
+f) Invoice processing and payment
+g) Record maintenance
+
+4. TYPES OF CONTRACTS
+- Fixed-price contracts: Set price regardless of costs
+- Cost-reimbursement contracts: Buyer pays actual costs plus fee
+- Time and materials contracts: Payment based on time and materials used
+- Framework agreements: Long-term arrangements with pre-agreed terms
+
+5. SUPPLY CHAIN MANAGEMENT
+Supply chain management involves coordinating and managing all activities involved in sourcing, procurement, conversion, and logistics. It includes:
+- Demand planning
+- Inventory management
+- Warehouse operations
+- Transportation and distribution
+- Supplier relationship management
+
+6. PROCUREMENT ETHICS
+Ethical procurement practices include:
+- Transparency in all dealings
+- Fair competition
+- Conflict of interest avoidance
+- Confidentiality of supplier information
+- Compliance with laws and regulations
