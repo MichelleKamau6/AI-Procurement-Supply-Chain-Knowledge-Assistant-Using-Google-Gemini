@@ -91,7 +91,7 @@ npm install
 npm run dev
 ```
 
-The application will start at `http://localhost:5173`
+The application will start at `http://localhost:5173` or 'http://localhost:5174'
 
 ## 📖 Usage Guide
 
@@ -304,7 +304,7 @@ MIT License - Free to use for educational and commercial purposes
 
 ## 👤 Author
 
-Michelle Kamau  
+Lilian Kamau  
 GitHub: [github.com/MichelleKamau6](https://github.com/MichelleKamau6)  
 Academic Project - Procurement & Supply Chain AI Chatbot
 
