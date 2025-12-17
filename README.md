@@ -16,7 +16,9 @@ This application demonstrates the integration of modern web technologies with AI
 
 ## ✨ Features
 
-- 🤖 **AI-Powered Q&A**: Uses Google Gemini for intelligent responses
+- 🔐 **User Authentication**: Signup/signin system with localStorage persistence
+- 🎯 **Demo Mode**: Works without API key using comprehensive Q&A database (50+ topics)
+- 🤖 **AI-Powered Q&A**: Uses Google Gemini API for intelligent responses (when API key provided)
 - 📄 **Document Upload**: Supports PDF, TXT, DOC, and DOCX files
 - 🔍 **RAG Implementation**: Retrieval-Augmented Generation for context-aware answers
 - 💬 **Real-time Chat Interface**: Smooth, responsive chat experience
@@ -28,10 +30,13 @@ This application demonstrates the integration of modern web technologies with AI
 ## 📁 Project Structure
 
 ```
-lilian073/
+trialprocurement/
 ├── src/
-│   ├── App.jsx              # Main chatbot component
-│   ├── App.css              # Component styling
+│   ├── App.jsx              # Main chatbot component with auth integration
+│   ├── App.css              # Chatbot styling
+│   ├── Auth.jsx             # Authentication component (signup/signin)
+│   ├── Auth.css             # Authentication styling
+│   ├── demoQA.js            # Comprehensive Q&A database (50+ topics)
 │   ├── index.css            # Global styles
 │   └── main.jsx             # Application entry point
 ├── public/                  # Static assets
@@ -53,7 +58,7 @@ lilian073/
 ### Step 1: Clone Repository
 
 ```bash
-git clone https://github.com/kamaulilian073-cpu/AI-Procurement-Supply-Chain-Knowledge-Assistant-Using-Google-Gemini.git
+git clone https://github.com/MichelleKamau6/AI-Procurement-Supply-Chain-Knowledge-Assistant-Using-Google-Gemini.git
 cd AI-Procurement-Supply-Chain-Knowledge-Assistant-Using-Google-Gemini
 ```
 
@@ -63,7 +68,9 @@ cd AI-Procurement-Supply-Chain-Knowledge-Assistant-Using-Google-Gemini
 npm install
 ```
 
-### Step 3: Get Google Gemini API Key
+### Step 3: Get Google Gemini API Key (Optional)
+
+**Note**: The application works in demo mode without an API key using a comprehensive Q&A database.
 
 1. Visit [Google AI Studio](https://aistudio.google.com/apikey)
 2. Sign in with your Google account
@@ -88,12 +95,25 @@ The application will start at `http://localhost:5173`
 
 ## 📖 Usage Guide
 
-### Starting the Chat
+### Authentication
 
 1. Open the application in your browser
-2. Enter your Google Gemini API key in the input field
-3. Click "Start Chat" or press Enter
-4. Wait for successful initialization
+2. Create an account using the signup form (name, email, password)
+3. Or sign in if you already have an account
+4. User credentials are stored locally in your browser
+
+### Starting the Chat
+
+**Option 1: Demo Mode (No API Key Required)**
+1. After authentication, click "Use Demo Mode (No API Key)"
+2. Start asking procurement questions immediately
+3. Access 50+ pre-loaded topics covering all procurement areas
+
+**Option 2: With Google Gemini API**
+1. Enter your Google Gemini API key in the input field
+2. Click "Start Chat" or press Enter
+3. Wait for successful initialization
+4. Upload documents for RAG-based responses
 
 ### Uploading Documents
 
@@ -104,25 +124,60 @@ The application will start at `http://localhost:5173`
 
 ### Asking Questions
 
-**Sample Questions:**
+**Sample Questions (50+ Topics Available):**
+
+**Tendering:**
 - "What is tendering?"
-- "Explain the role of contract management in procurement"
-- "What are the types of contracts in supply chain?"
-- "Describe the procurement process"
-- "What are procurement ethics?"
+- "Types of tender"
+- "How to evaluate tender?"
+- "What is in tender document?"
+
+**Contract Management:**
+- "Explain contract management"
+- "Types of contracts"
+- "Contract lifecycle"
+- "Contract breach"
+- "Contract KPIs"
+
+**Procurement Process:**
+- "Procurement process steps"
+- "What is purchase requisition?"
+- "Purchase order"
+- "Three way match"
+- "Procurement methods"
+
+**Supplier Management:**
+- "Supplier selection criteria"
+- "Supplier evaluation"
+- "Supplier relationship management"
+- "Supplier risk"
+
+**Ethics & Compliance:**
+- "Procurement ethics"
+- "Conflict of interest"
+- "Procurement fraud"
+
+**Supply Chain:**
+- "Supply chain management"
+- "Inventory management"
+- "Logistics"
+- "Demand planning"
+
+**And many more topics including**: Cost analysis, E-procurement, Strategic sourcing, Sustainability, Risk management, Negotiation, Quality control, Compliance, and Performance metrics
 
 ### System Behavior
 
-The chatbot is configured with the following system instruction:
+**Demo Mode:**
+- Uses comprehensive Q&A database with 50+ procurement topics
+- Keyword-based intelligent matching
+- Instant responses without API calls
+- Lists available topics if question not found
 
-```
-You are a Procurement & Supply Chain Assistant.
-You MUST answer strictly from the uploaded documents.
-If the answer is not found in the documents, say:
-'The document does not provide this information.'
-```
-
-This ensures responses are grounded in the uploaded documents, preventing hallucinations.
+**API Mode:**
+- Uses Google Gemini for intelligent responses
+- Supports document upload for RAG
+- System instruction ensures document-grounded answers
+- Prevents hallucinations by requiring document context
 
 ## 🔧 Configuration
 
@@ -249,8 +304,8 @@ MIT License - Free to use for educational and commercial purposes
 
 ## 👤 Author
 
-Michelle Kamau (kamaulilian073-cpu)  
-GitHub: [github.com/kamaulilian073-cpu](https://github.com/kamaulilian073-cpu)  
+Michelle Kamau  
+GitHub: [github.com/MichelleKamau6](https://github.com/MichelleKamau6)  
 Academic Project - Procurement & Supply Chain AI Chatbot
 
 ## 🙏 Acknowledgments

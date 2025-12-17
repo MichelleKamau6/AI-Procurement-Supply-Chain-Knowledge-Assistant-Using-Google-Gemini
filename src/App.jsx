@@ -1,7 +1,10 @@
 import { useState, useRef, useEffect } from 'react';
+import Auth from './Auth';
+import { findAnswer } from './demoQA';
 import './App.css';
 
 function App() {
+  const [user, setUser] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [apiKey, setApiKey] = useState('');
@@ -17,8 +20,23 @@ If the answer is not found in the documents, say:
 'The document does not provide this information.'`;
 
   useEffect(() => {
+    const currentUser = localStorage.getItem('currentUser');
+    if (currentUser) {
+      setUser(JSON.parse(currentUser));
+    }
+  }, []);
+
+  useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('currentUser');
+    setUser(null);
+    setIsConfigured(false);
+    setMessages([]);
+    setApiKey('');
+  };
 
   const handleFileUpload = async (e) => {
     const files = Array.from(e.target.files);
@@ -60,6 +78,18 @@ If the answer is not found in the documents, say:
     }
   };
 
+  const getDemoResponse = (question) => {
+    // Try to find answer in Q&A database
+    const answer = findAnswer(question);
+    
+    if (answer) {
+      return answer;
+    }
+
+    // If no match found, provide helpful message
+    return 'I can answer questions about: Tendering, Contract Management, Procurement Process, Supplier Management, Ethics, Supply Chain, Inventory, Logistics, Cost Management, Compliance, E-Procurement, Strategic Sourcing, Sustainability, Risk Management, and Negotiation. Please try rephrasing your question or ask about these topics.';
+  };
+
   const sendMessage = async () => {
     if (!input.trim() || !chatRef.current) return;
 
@@ -69,31 +99,50 @@ If the answer is not found in the documents, say:
     setIsLoading(true);
 
     try {
-      const prompt = uploadedFiles.length > 0
-        ? `${systemInstruction}\n\nContext from uploaded documents:\n${uploadedFiles.map(f => `[${f.name}]\n${f.content}`).join('\n\n')}\n\nUser question: ${input}`
-        : `${systemInstruction}\n\nUser question: ${input}`;
+      if (chatRef.current === 'demo') {
+        // Demo mode
+        setTimeout(() => {
+          const response = getDemoResponse(input);
+          setMessages(prev => [...prev, { role: 'assistant', content: response }]);
+          setIsLoading(false);
+        }, 1000);
+      } else {
+        // API mode
+        const prompt = uploadedFiles.length > 0
+          ? `${systemInstruction}\n\nContext from uploaded documents:\n${uploadedFiles.map(f => `[${f.name}]\n${f.content}`).join('\n\n')}\n\nUser question: ${input}`
+          : `${systemInstruction}\n\nUser question: ${input}`;
 
-      const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${chatRef.current}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-        }
-      );
-      
-      const data = await response.json();
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
-      
-      setMessages(prev => [...prev, { role: 'assistant', content: text }]);
+        const response = await fetch(
+          `https://generativelanguage.googleapis.com/v1/models/gemini-pro:generateContent?key=${chatRef.current}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+          }
+        );
+        
+        const data = await response.json();
+        const text = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response';
+        
+        setMessages(prev => [...prev, { role: 'assistant', content: text }]);
+        setIsLoading(false);
+      }
     } catch (error) {
       setMessages(prev => [...prev, { 
         role: 'assistant', 
         content: `Error: ${error.message}` 
       }]);
-    } finally {
       setIsLoading(false);
     }
+  };
+
+  if (!user) {
+    return <Auth onLogin={setUser} />;
+  }
+
+  const startDemoMode = () => {
+    chatRef.current = 'demo';
+    setIsConfigured(true);
   };
 
   if (!isConfigured) {
@@ -103,13 +152,15 @@ If the answer is not found in the documents, say:
         <p>Powered by Google Gemini</p>
         <input
           type="password"
-          placeholder="Enter your Gemini API Key"
+          placeholder="Enter your Gemini API Key (Optional)"
           value={apiKey}
           onChange={(e) => setApiKey(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && initializeChat()}
         />
-        <button onClick={initializeChat}>Start Chat</button>
-        <small>Get your API key from <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">Google AI Studio</a></small>
+        <button onClick={initializeChat}>Start with API Key</button>
+        <div className="divider">OR</div>
+        <button className="demo-btn" onClick={startDemoMode}>Continue in Demo Mode</button>
+        <small>Demo mode uses pre-defined responses. For AI-powered answers, use an API key from <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener noreferrer">Google AI Studio</a></small>
       </div>
     );
   }
@@ -117,8 +168,12 @@ If the answer is not found in the documents, say:
   return (
     <div className="chat-container">
       <header>
-        <h2>📦 Procurement & Supply Chain Assistant</h2>
-        <div className="file-upload">
+        <div className="header-left">
+          <h2>📦 Procurement Assistant</h2>
+          <span className="user-name">Welcome, {user.name}</span>
+        </div>
+        <div className="header-right">
+          <div className="file-upload">
           <label htmlFor="file-input">📄 Upload PDFs/Docs</label>
           <input
             id="file-input"
@@ -130,6 +185,8 @@ If the answer is not found in the documents, say:
           {uploadedFiles.length > 0 && (
             <span className="file-count">{uploadedFiles.length} file(s)</span>
           )}
+          </div>
+          <button className="logout-btn" onClick={handleLogout}>Logout</button>
         </div>
       </header>
 
