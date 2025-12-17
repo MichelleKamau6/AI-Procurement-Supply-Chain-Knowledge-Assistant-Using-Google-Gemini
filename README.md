@@ -249,7 +249,7 @@ MIT License - Free to use for educational and commercial purposes
 
 ## 👤 Author
 
-Michelle Kamau (kamaulilian073-cpu)  
+Lilian Kamau (kamaulilian073-cpu)  
 GitHub: [github.com/kamaulilian073-cpu](https://github.com/kamaulilian073-cpu)  
 Academic Project - Procurement & Supply Chain AI Chatbot
 
